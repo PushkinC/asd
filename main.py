@@ -1,5 +1,6 @@
 import math
 import sys
+from ui_file import Ui_MainWindow
 import random as rnd
 from PyQt5 import QtGui, uic
 from PyQt5.QtCore import Qt, QPoint
@@ -7,16 +8,17 @@ from PyQt5.QtGui import QPainter, QColor, QPolygon
 from PyQt5.QtWidgets import QWidget, QApplication, QPushButton, QMainWindow
 
 
-class Example(QMainWindow):
+class Example(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.pos = (400, 300)
         self.circle = False
         self.pushButton.clicked.connect(self.cl)
 
     def cl(self):
         self.size = rnd.randint(50, 100)
+        self.color = (rnd.randint(0, 256), rnd.randint(0, 256), rnd.randint(0, 256))
         self.circle = True
         self.repaint()
 
@@ -29,7 +31,7 @@ class Example(QMainWindow):
 
 
     def draw_points(self, qp):
-        pen = QtGui.QBrush(QtGui.QColor('yellow'))
+        pen = QtGui.QBrush(QtGui.QColor(*self.color))
         qp.setBrush(pen)
         qp.drawEllipse(self.pos[0] - self.size // 2, self.pos[1] - self.size // 2, self.size, self.size)
 
